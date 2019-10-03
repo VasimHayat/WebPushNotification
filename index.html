@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-messaging.js"></script>
+    <script>
+   
+
+ 
+        firebase.initializeApp({
+              apiKey: "AIzaSyB1ShOJW209qRD8csxTLHDIcNkAAPd84CY",
+    authDomain: "fir-cloud-messaging-147ff.firebaseapp.com",
+    databaseURL: "https://fir-cloud-messaging-147ff.firebaseio.com",
+    projectId: "fir-cloud-messaging-147ff",
+    storageBucket: "",
+    messagingSenderId: "869529021649",
+    appId: "1:869529021649:web:b72f20fcb90b72f4e1a9f0",
+    measurementId: "G-M73821FC0W"
+        })
+        const messaging = firebase.messaging();
+        function initFirebaseMessagingRegistration() {
+            messaging
+                .requestPermission()
+                .then(function () {
+                    messageElement.innerHTML = "Got notification permission";
+                    console.log("Got notification permission");
+                  
+                    return messaging.getToken();
+                })
+                .then(function (token) {
+                    // print the token on the HTML page
+                    tokenElement.innerHTML = "Token is " + token;
+                })
+                .catch(function (err) {
+                    errorElement.innerHTML = "Error: " + err;
+                    console.log("Didn't get notification permission", err);
+                });
+        }
+        messaging.onMessage(function (payload) {
+            console.log("Message received. ", JSON.stringify(payload));
+var _notifPayLoad = JSON.parse(payload.data.notification);
+            notificationElement.innerHTML = notificationElement.innerHTML + " " + payload.data.notification;
+ 
+         new Notification(_notifPayLoad.title, { body: _notifPayLoad.body,icon:'https://cdn.hubworks.com/test/201910012110/assets/images/logo/ribHeaderLogo.png'});
+       // new Notification(payload.data.notification); 
+        });
+        messaging.onTokenRefresh(function () {
+            messaging.getToken()
+                .then(function (refreshedToken) {
+                    console.log('Token refreshed.');
+                    tokenElement.innerHTML = "Token is " + refreshedToken;
+                }).catch(function (err) {
+                    errorElement.innerHTML = "Error: " + err;
+                    console.log('Unable to retrieve refreshed token ', err);
+                });
+        });
+        
+         
+
+ function startWorker() {
+ 
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('././firebase-messaging-sw.js')
+.then((registration) => {
+  messaging.useServiceWorker(registration);
+
+  // Request permission and get token.....
+}); 
+          }else{
+              console.log("no service worker")
+          }
+           
+  
+ }
+
+		  
+  
+startWorker();
+    </script>
+</head>
+
+<body>
+    <h1>This is a test page</h1>
+    <div id="token" style="color:lightblue"></div>
+    <div id="message" style="color:lightblue"></div>
+    <div id="notification" style="color:green"></div>
+    <div id="error" style="color:red"></div>
+    <script>
+        messageElement = document.getElementById("message")
+        tokenElement = document.getElementById("token")
+        notificationElement = document.getElementById("notification")
+        errorElement = document.getElementById("error")
+    </script>
+    <button onclick="initFirebaseMessagingRegistration()">Enable Firebase Messaging</button>
+
+</html>
