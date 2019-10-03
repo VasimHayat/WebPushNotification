@@ -16,9 +16,10 @@ Web Push Notification using firebase
 
 
 # Reaquest Headers
-   #Authorization - key=AAAAynP37NE:APA91bHWQ7bnhAsyAkMqECIeogAyxCXG-kSd_hns0obXdaELEJyKxh-x42xT2zmhFJAmfJBOpySKjDJcc3eYt-  ESOuMos9cMPnCLbpS0OuJC_uKaAKMoyjFLu3zTOpLbuZsd_RPg1b1Y
+       #Authorization - key=AAAAynP37NE:APA91bHWQ7bnhAsyAkMqECIeogAyxCXG-kSd_hns0obXdaELEJyKxh-x42xT2zmhFJAmfJBOpySKjDJcc3eYt-  ESOuMos9cMPnCLbpS0OuJC_uKaAKMoyjFLu3zTOpLbuZsd_RPg1b1Y
  
- # Content-Type - application/json
+ # Content-Type -
+     application/json
  
  # Request Url 
-  https://fcm.googleapis.com/fcm/send
+      https://fcm.googleapis.com/fcm/send
